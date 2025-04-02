@@ -9,36 +9,35 @@ import random
     print(messages)"
     """
 loop = True
+day = 1
 while loop == True:
 
 
 
-
-
-
+    
 
     random_integer = random.randint(1, 5)
+    if day >1:
+        print("random day")
 
-    if(random_integer == 5):
-        userinput = input("what would you like to try today?: ")
-
-
-
-
+        if(random_integer == 5):
+            userinput = input("what would you like to try today?: ")
 
 
 
 
     base = "You are the master of the game you will give a choice each day on events of that day."
     story = "There is a zombie apocalypse and the user is all alone they may meet people, friends or foes. their goal is to get out of their city. get help. or find a cure."
-    game = "please end each message off with 1 of the 3 choices. (Alive). (Dead). (Won). depending on what happened in that day."
+    game = "please end each message off with 1 of the 3 choices. (Alive) or (Dead) or (Won). depending on what happened in that day. NO MORE THAN 1 of those choices"
     wincondition = "win condition only happens if you get help, go somewhere else(like a city), or somehow stop the zombie plague."
     choices = "you can only make no more then 2 choices in a day"
     wincondition2 = "the win condtions should be rare to happen. dying should be less rare then winning, and alive is common"
-    response = "please don't add new lines"
+    response = "please don't add new lines or '\n'"
+
+
     OPEN_AI_KEY="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"
     client= OpenAI(api_key=OPEN_AI_KEY)
-    if(random_integer == 5):
+    if(random_integer == 5 and day > 1):
         completion = client.chat.completions.create(
             model="gpt-4o-mini",
             store=True,
@@ -53,9 +52,14 @@ while loop == True:
             {"role": "user", "content": response}
             ]
             )
-        completiond = completion.replace("\n"," ")
+        output = str(completion.choices[0].message)
+        output = output.replace("\n"," ")
+        output = output.replace("\n\n"," ")
+        output = output.replace("\n1"," ")
+        output = output.replace("\n2"," ")
+        print(output)
         
-        print(completiond.choices[0].message);
+        
     else:
         completion = client.chat.completions.create(
                 model="gpt-4o-mini",
@@ -71,7 +75,7 @@ while loop == True:
                 ]
                 )
         
-        print(completion.choices[0].message);
+        
         output = str(completion.choices[0].message)
         output = output.replace("\n"," ")
         output = output.replace("\n\n"," ")
@@ -79,6 +83,7 @@ while loop == True:
         output = output.replace("\n2"," ")
         print(output)
     loop = False
+    day=day+1
 
 
 
