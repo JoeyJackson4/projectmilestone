@@ -1,6 +1,7 @@
 from openai import OpenAI
 import threading
 import random
+import time
 """for i in (1,10,1):
     message = input("please enter message: ")
     messages = []
@@ -10,9 +11,13 @@ import random
     """
 loop = True
 day = 1
+food = 3
+water = 3
+print("you have food & water for 3 days")
+print("if you don't have food or water for that day you die")
 while loop == True:
 
-
+    time.sleep(5)
 
     
 
@@ -33,6 +38,9 @@ while loop == True:
     choices = "you can only make no more then 2 choices in a day"
     wincondition2 = "the win condtions should be rare to happen. dying should be less rare then winning, and alive is common"
     response = "please don't add new lines or '\n'"
+    foodgain = "if during that day the user found food please put: foodgain. at the end of the text"
+    watergain = "if during that day the user found water please put: watergain. at the end of the text"
+    noworries = "don't track their thirst or hunger as that is seperatly done"
 
 
     OPEN_AI_KEY="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"
@@ -49,6 +57,9 @@ while loop == True:
             {"role": "user", "content": userinput},
             {"role": "user", "content": choices},
             {"role": "user", "content": wincondition2},
+            {"role": "user", "content": watergain},
+            {"role": "user", "content": foodgain},
+            {"role": "user", "content": noworries},
             {"role": "user", "content": response}
             ]
             )
@@ -65,12 +76,15 @@ while loop == True:
                 model="gpt-4o-mini",
                 store=True,
                 messages=[
-                {"role": "user", "content": base},
+                {"role": "user", "content": base},                
                 {"role": "user", "content": story},
                 {"role": "user", "content": game},
                 {"role": "user", "content": wincondition},
                 {"role": "user", "content": choices},
                 {"role": "user", "content": wincondition2},
+                {"role": "user", "content": watergain},
+                {"role": "user", "content": foodgain},
+                {"role": "user", "content": noworries},
                 {"role": "user", "content": response}
                 ]
                 )
